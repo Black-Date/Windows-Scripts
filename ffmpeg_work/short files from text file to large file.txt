@@ -1,0 +1,7 @@
+to list all names (only) of files in a txt files
+
+(for %i in (*mp4[if files are mp4]) do @echo file '%i') > list.txt
+
+to merge all short video files into a single video file using txt file
+
+ffmpeg -f concat -i list.txt -c copy output.mp4

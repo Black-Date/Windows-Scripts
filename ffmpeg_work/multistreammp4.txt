@@ -1,0 +1,1 @@
+ffmpeg -i "The Bunker.avi" -map 0:0 -map 0:1 -map 0:2 -vcodec h264 -acodec:0 mp3 -acodec:1 mp3 TheBunkerNwMix.mp4

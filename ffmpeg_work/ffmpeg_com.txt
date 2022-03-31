@@ -1,0 +1,81 @@
+#1- ffmpeg -i "<name of file with extension>" -c copy -map 0 "<name of output file with extension{generally used for mp4}>"
+
+PRO tip: for large files dont use same directory
+------------------------------------------------
+#2- ffmpeg -i "<FileName>" -map 0:v -c copy "outname.mp4" -map 0:a:0 -c copy "outname_0.aac" -map 0:a:1 -c copy "outname_1.aac" -map 0:a:2 -c copy "outname_2.aac"
+
+this will give you your 3 audio tracks and your one video tracks[better look in troublechut's bat file]
+--------------------------------------------------
+#3- ffmpeg -i "<name of video with extension>" -c copy -map 0 -segment_time 00:05:00 -f segment -reset_timestamps 1 output%03d.<extension>
+
+this will spill video{cool!!!}
+----------------------------------------------------
+#4- ffmpeg -i "<complete video file name>" -i "<complete audio file name>" -vcodec copy -acodec copy -map 0:0 -map 1:0 "output.extension"
+
+replaces video's audio with the given audio
+
+-> if you wanna convert audio in different codec defone library name after -acodec
+
+the above command should also work like this:
+
+ffmpeg -i "<complete video file name>" -i "<complete audio file name>" -c:v copy -c:a copy -map 0:0 -map 1:0 "output.extension" {try it sometime}
+--------------------------------------------------
+#5- ffmpeg -i "<complete name of audio file>" "<complete output name>"
+
+this will convert your input audio in desired output format
+-----------------------------------------------------
+#6- ffmpeg -i "<name of audio.mp3>" -codec:a libmp3lame -q:a j "outpout.mp3"
+
+q:a needs a integer (0-9 repesented above by j) lower q(quality) better quality
+although mp3 uses variabe bitrate hence used q parameter, but you cna lso define your cbr(constant bitrate) like this:
+
+ffmpeg -i "<name of audio.mp3>" -codec:a libmp3lame -b:a 50k(any itrate you want) "outpout.mp3"
+
+perhaps you could use -c:a instea of -codec:a
+------------------------------------------------------
+#7- ffmpeg -i "<complete video name>" -i "<complete audio name>" -i "<complete 2nd audio name>" -map 0 -map 1 -map 2 -map 3 -metadata:s:a:0 language=eng -metadata:s:a:1 language=hin -codec copy "output.mp4"
+
+this will add multiple audios in your video file
+-----------------------------------------------------
+#8- you can add -shortest to make your video according to shortest of audio or video
+------------------------------------------------------------------
+#9- ffmpeg -i "<complete video name>" -i "<complete audio name>" -c copy -map 0:0 -map 1:0 -map 0:1 -shortest "<output file name.extension>"
+
+it'll add multiple audio tracks
+---------------------------------------------------------------------------
+#10- ffmpeg -i "<complete input video name>" -map 0:1 "<outut.extension>"
+
+it'll give you audio of video file
+---------------------------------------------------------
+#11- ffmpeg -i "<complete name of video file>" -c:a libmp3lame {you can choose any codec lib} -q:a 4 "<output.extension{a/c to codec}>"
+
+it'll give you the audio of video file in desired codec
+---------------------------------------------------------
+#12- ffmpeg -i "<complete name of video file>" -c:a libmp3lame {you can choose any codec lib} -b:a 320k{you can still choose -q:a} -map 0:1 "<output.extension{a/c to codec}>"
+
+it'll give you selected stream audio from the video also in desired codec
+-----------------------------------------------------
+#13- ffmpeg -i "<complete video name>" -i "<complete audio name>" -c copy -shortest "<output.extension>"
+
+this will add the audio but also play around shortest stream
+---------------------------------------------
+#14- ffmpeg -i "<complete video name>" -i "<complete audio name>" -c copy -map 0:0 -map 1:0 -map 0:1 -disposition:a:0 default "<output.extension>"
+
+it'll add a new audio track as default
+---------------------------------------------
+#15- ffmpeg -i "<complete video name>" -i "<complete audio name>" -c copy -map 0:0 -map 1:0 -map 0:1 -disposition:a:0 comment "<output.extension>"
+
+it'll remove the "default" sudio being default
+--------------------------------------------------
+#16- ffmpeg -i "<complete video name>" -vn "<audio name.extension>"
+
+it'll give you only audio from video
+-------------------------------------------------
+#17- ffmpeg -i "<complete video name>" -an "<video name.extension>"
+
+it'll remove audio from video and gives you only video
+-------------------------------------------------
+#18- ffmpeg -i "<complete video name>" -i "<complete audio name>" -vcodec copy -map 0:v:0 -map 1:a:0 -acodec aac "<output.extension>"
+
+it'll add provided audio in video by also encoding in aac
+-------------------------------------------
